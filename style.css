@@ -3,6 +3,7 @@ body {
     background-color: #f4f4f9;
     margin: 0;
     padding: 0;
+    position: relative;
 }
 
 header {
@@ -136,6 +137,47 @@ form {
     transition: background-color 0.3s ease;
 }
 
+.logout-container{
+    position: absolute;
+    right: 2%;
+    top: 3%;
+}
 .button:hover {
     background-color: #09532c;
+}
+
+/* To Do category */
+#ToDo {
+    background-color: #f39c12; /* Orange for To Do */
+}
+
+/* Doing category */
+#Doing {
+    background-color: #3498db; /* Blue for Doing */
+}
+
+/* Done category */
+#Done {
+    background-color: #2ecc71; /* Green for Done */
+}
+
+/* Additional styling for hover effects */
+.task-card:hover {
+    transform: scale(1.02);
+    transition: 0.3s ease-in-out;
+}
+
+.filter-input {
+    width: 97%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.filter-input:focus {
+    outline: none;
+    border-color: #3498db; /* Matches the "Doing" color */
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
 }

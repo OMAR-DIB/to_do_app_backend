@@ -9,13 +9,14 @@ session_start();
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./style.css">
-    <title>Document</title>
+    <!-- <link rel="stylesheet" href="./style2.css"> -->
+    <title>My ToDoApp</title>
   </head>
   <body>
 
     <header>
       <h1><?php
-      echo $_SESSION['user_id'];
+      // echo $_SESSION['user_id'];
       if (!isset($_SESSION["username"])) {
         header("Location: ./login/login.php"); // Redirect to login page
         exit(); // Ensure no further code is executed
@@ -47,35 +48,49 @@ session_start();
 
 
     <div class="container">
-        <ul class="list-container">
+    <div class="task-filter">
+        <input
+            type="text"
+            id="taskFilterInput"
+            placeholder="Search tasks..."
+            class="filter-input"
+            onkeyup="searchTask(this.value)" />
+    </div>
+        <ul class="list-container" id="result">
             <?php
             $user_id = $_SESSION['user_id'];
-                 $query = "SELECT * FROM tasks WHERE user_id = $user_id";
+            $query = "SELECT tasks.*, categories.name AS category_name FROM tasks 
+                 JOIN categories ON tasks.category_id = categories.id 
+                WHERE tasks.user_id = $user_id";
                  $result = mysqli_query($conn, $query);
-                 while ($row = mysqli_fetch_array($result)) {
+                 
+                  while ($row = mysqli_fetch_array($result)) {
+                      // Convert category name to a CSS-friendly class
+                      
+                      $category_class = $row["category_name"]; // e.g., "To Do" -> "to-do"
 
-                    echo '<li class="task-card">';
-                    echo '<div class="task-details">';
-                    echo '<div class="task-title">Title: ' . htmlspecialchars($row["title"]) . '</div>';
-                    echo '<div class="task-description">Description: ' . htmlspecialchars($row["description"]) . '</div>';
-                    if (!empty($row["due_date"])) {
-                        echo '<div class="task-due-date">Due Date: ' . htmlspecialchars($row["due_date"]) . '</div>';
-                    } else {
-                        echo '<div class="task-due-date">Due Date: Not specified</div>';
-                    }
-                    echo '</div>';
-                    echo '<div class="task-actions">';
-                    echo '<form action="updateTask.php" method="GET" style="display: inline;">';
-                    echo '<input type="hidden" name="task_id" value="' . $row["id"] . '">';
-                    echo '<button class="button update" type="submit">Update</button>';
-                    echo '</form>';
-                    echo '<form action="deleteTask.php" method="POST" style="display: inline;">';
-                        echo '<input type="hidden" name="task_id" value="' . $row["id"] . '">';
-                         echo '<button class="button delete" type="submit">Delete</button>';
-                    echo '</form>';
-                    echo '</div>';
-                    echo '</li>';
-                 }
+                      echo '<li class="task-card" id='. $category_class .'>';
+                      echo '<div class="task-details">';
+                      echo '<div class="task-title">Title: ' . htmlspecialchars($row["title"]) . '</div>';
+                      echo '<div class="task-description">Description: ' . htmlspecialchars($row["description"]) . '</div>';
+                      if (!empty($row["due_date"])) {
+                          echo '<div class="task-due-date">Due Date: ' . htmlspecialchars($row["due_date"]) . '</div>';
+                      } else {
+                          echo '<div class="task-due-date">Due Date: Not specified</div>';
+                      }
+                      echo '</div>';
+                      echo '<div class="task-actions">';
+                      echo '<form action="updateTask.php" method="GET" style="display: inline;">';
+                      echo '<input type="hidden" name="task_id" value="' . $row["id"] . '">';
+                      echo '<button class="button update" type="submit">Update</button>';
+                      echo '</form>';
+                      echo '<form action="deleteTask.php" method="POST" style="display: inline;">';
+                      echo '<input type="hidden" name="task_id" value="' . $row["id"] . '">';
+                      echo '<button class="button delete" type="submit">Delete</button>';
+                      echo '</form>';
+                      echo '</div>';
+                      echo '</li>';
+                  }
             ?>
         </ul>
 
@@ -83,11 +98,26 @@ session_start();
             <?php
          if (isset($_SESSION['user_id'])) {
 
-            echo '<a href="logout.php"><button class="logout-button">Logout</button></a>';
+            echo '<a href="logout.php"><button class="button logout">Logout</button></a>';
          }
         ?>
          </div>
     </div>
+
+    <script>
+      
+      function searchTask(str) {
+
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                document.getElementById("result").innerHTML = xmlhttp.responseText;
+            }
+        }
+        xmlhttp.open("GET", "./api/searchByName.php?task_title="+ str, true);
+        xmlhttp.send();
+}
+    </script>
   </body>
 </html>
 
