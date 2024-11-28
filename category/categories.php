@@ -1,5 +1,4 @@
 <?php
-require '../connection.php';
 
 // Create Category
 function createCategory($name) {

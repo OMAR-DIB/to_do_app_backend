@@ -1,7 +1,7 @@
 <?php
 require_once '../connection.php';
 require '../task/task.php';
-global $method;
+global $method = 'get';
 
 // Utility function to send JSON responses
 function sendResponse($status, $message, $data = []) {

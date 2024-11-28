@@ -1,5 +1,4 @@
 <?php
-require '../connection.php';
 
 // Create Task
 function createTask($userId, $categoryId, $title, $description, $dueDate) {
