@@ -1,6 +1,11 @@
 <?php
 require "connection.php";
 session_start();
+// Redirect to login if not logged in
+if (!isset($_SESSION["username"])) {
+    header("Location: ./login/login.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -14,6 +19,7 @@ session_start();
 </head>
 
 <body>
+    <?php include "popup.php"; ?>
     <header>
         <h1>
             <?php
@@ -99,7 +105,7 @@ session_start();
         </ul>
     </div>
     <div class="logout-container">
-        <img id="themeToggle" class="light-dark"  src="./assets/night-mode.png" alt="light-dark" >
+        <img id="themeToggle" class="light-dark" src="./assets/night-mode.png" alt="light-dark">
         <?php
         if (isset($_SESSION['user_id'])) {
             echo '<a href="logout.php"><img class="button logout" src="./assets/logout.svg" alt="logout"></a>';
