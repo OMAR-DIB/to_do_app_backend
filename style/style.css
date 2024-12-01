@@ -14,6 +14,35 @@ header {
     margin-bottom: 20px;
 }
 
+body.light-mode {
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+header.light-mode {
+    background-color: #4caf50;
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background-color: #121212;
+    color: #f4f4f9;
+}
+
+header.dark-mode {
+    background-color: #1e1e1e;
+}
+/* Button in Dark Mode */
+button.dark-mode {
+    background-color: #444;
+    color: white;
+}
+
+button.dark-mode:hover {
+    background-color: #333;
+}
+
+
 .container {
     max-width: 800px;
     margin: 0 auto;
@@ -124,7 +153,10 @@ header {
     text-align: center;
     padding: 20px;
 }
-
+.light-dark{
+    width: 40px;
+    height: 40px;
+}
 header h1 {
     margin: 0;
     font-size: 2em;
@@ -166,6 +198,9 @@ form {
 
 .logout-container{
     position: absolute;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
     right: 2%;
     top: 3%;
 }

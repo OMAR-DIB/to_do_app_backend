@@ -12,11 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['task_id'])) {
         header("Location: index.php");
         exit();
     } else {
-        // Handle errors
         echo "Error deleting task: " . mysqli_error($conn);
     }
 } else {
-    // Handle invalid access
     echo "Invalid request.";
 }
 

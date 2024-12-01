@@ -5,12 +5,14 @@ session_start();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./style2.css">
-    <title>My ToDoApp</title>
+    <link rel="stylesheet" href="./style/style.css">
+    <title>My ToDoPro</title>
 </head>
+
 <body>
     <header>
         <h1>
@@ -23,7 +25,7 @@ session_start();
             echo $username . "'s TODO ";
             ?>
         </h1>
-        <form action="" method="POST">
+        <form action="index.php" method="POST">
             <input type="text" class="myInput" placeholder="Title..." name="title" required />
             <input type="text" class="myInput" placeholder="Description..." name="description" required />
             <input name="due_date" type="date" required />
@@ -37,8 +39,10 @@ session_start();
                 ?>
             </select>
             <button class="button" type="submit">Add</button>
+
         </form>
     </header>
+
 
     <div class="container">
         <div class="task-filter">
@@ -47,8 +51,7 @@ session_start();
                 id="taskFilterInput"
                 placeholder="Search tasks..."
                 class="filter-input"
-                onkeyup="searchTask(this.value)"
-            />
+                onkeyup="searchTask(this.value)" />
         </div>
         <ul class="list-container" id="result">
             <?php
@@ -64,9 +67,9 @@ session_start();
                 echo '<li class="task-card" id="' . $category_class . '">'; // Add category as ID
                 echo '<div class="mark">';
                 if ($category_class === "done") {
-                    echo '<span class="checkmark">✔</span>'; // Green check for Done
+                    echo '<span class="checkmark">✔</span>';
                 } elseif ($category_class === "todo") {
-                    echo '<span class="todo-indicator">⚡</span>'; // Orange for To Do
+                    echo '<span class="todo-indicator">⚡</span>';
                 }
                 echo '</div>';
                 echo '<div class="task-design">';
@@ -91,31 +94,33 @@ session_start();
                 echo '</div>';
                 echo '</div>';
                 echo '</li>';
-            }            
+            }
             ?>
         </ul>
     </div>
     <div class="logout-container">
+        <img id="themeToggle" class="light-dark"  src="./assets/night-mode.png" alt="light-dark" >
         <?php
         if (isset($_SESSION['user_id'])) {
-            echo '<a href="logout.php"><button class="button logout">Logout</button></a>';
+            echo '<a href="logout.php"><img class="button logout" src="./assets/logout.svg" alt="logout"></a>';
         }
         ?>
     </div>
-    <script>     
-      function searchTask(str) {
-
-        xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                document.getElementById("result").innerHTML = xmlhttp.responseText;
+    <script src="./js/main.js"></script>
+    <script>
+        function searchTask(str) {
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    document.getElementById("result").innerHTML = xmlhttp.responseText;
+                }
             }
+            xmlhttp.open("GET", "./api/searchByName.php?task_title=" + str, true);
+            xmlhttp.send();
         }
-        xmlhttp.open("GET", "./api/searchByName.php?task_title="+ str, true);
-        xmlhttp.send();
-}
     </script>
 </body>
+
 </html>
 
 <?php
@@ -136,7 +141,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: " . $_SERVER['PHP_SELF']);
             exit(); // Ensure script stops after redirect
         } else {
-            // Handle error without output
             error_log("Error adding task: " . mysqli_error($conn));
         }
     }
