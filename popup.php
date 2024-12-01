@@ -61,7 +61,5 @@
             z-index: 999;
         }
     </style>
-    <?php unset($_SESSION['welcome_message']);
-        session_destroy();
-    ?>
+<?php unset($_SESSION['welcome_message']); ?>
 <?php endif; ?>
