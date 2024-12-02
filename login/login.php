@@ -3,14 +3,6 @@ require "../connection.php"; // Connect to the database
 
 session_start(); // Start the session
 
-// for pop pop
-// After successful login
-// $_SESSION['username'] = $username; // Set the logged-in username
-// $_SESSION['welcome_message'] = true; // Set a flag for showing the welcome message
-// header("Location: ../index.php"); // Redirect to the main page
-// exit();
-
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve user input
     $email = mysqli_real_escape_string($conn, $_POST['email']);

@@ -1,244 +1,391 @@
+/* General Responsive Adjustments */
+/* Smaller Screen Devices (Tablets and Below) */
+@media screen and (max-width: 768px) {
+
+  header {
+    padding: 15px 10px;
+    font-size: 1.5em;
+  }
+
+  .container {
+    padding: 15px;
+    width: 100%;
+  }
+
+  .task-card {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .task-design {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .task-title {
+    font-size: 1.5em;
+  }
+
+  form {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .myInput,
+  select,
+  input[type="date"] {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .button {
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .filter-input {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .logout-container {
+    position: static;
+    margin-top: 30px;
+    justify-content: center;
+  }
+}
+
+/* Smaller Mobile Devices (Phones) */
+@media screen and (max-width: 480px) {
+  header {
+    font-size: 1.2em;
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1.5em;
+  }
+
+  .task-title {
+    font-size: 1.2em;
+  }
+
+  .filter-input {
+    width: 95%;
+    font-size: 14px;
+  }
+
+  .button {
+    font-size: 0.9em;
+  }
+
+
+  .logout-container img {
+    width: 25px;
+    height: 25px;
+  }
+}
+/*      initial design       */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 0;
-    position: relative;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+  position: relative;
 }
 
 header {
-    background-color: #4caf50;
-    color: white;
-    text-align: center;
-    padding: 20px 0;
-    margin-bottom: 20px;
+  background-color: #4caf50;
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+  margin-bottom: 20px;
 }
 
 body.light-mode {
-    background-color: #f4f4f9;
-    color: #333;
+  background-color: #f4f4f9;
+  color: #333;
 }
 
 header.light-mode {
-    background-color: #4caf50;
+  background-color: #4caf50;
 }
-
-/* Dark Mode */
-body.dark-mode {
-    background-color: #121212;
-    color: #f4f4f9;
-}
-
-header.dark-mode {
-    background-color: #1e1e1e;
-}
-/* Button in Dark Mode */
-button.dark-mode {
-    background-color: #444;
-    color: white;
-}
-
-button.dark-mode:hover {
-    background-color: #333;
-}
-
 
 .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 .list-container {
-    list-style-type: none;
-    padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 
 .checkmark {
-    color: green;
-    font-size: 1.2em;
-    font-weight: bold;
-    margin-left: 10px;
+  color: green;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-left: 10px;
 }
 .mark {
-    flex: 0 0 30px; /* Fixed width for the mark/sign */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
-    color: #4caf50; /* Green color for marks */
+  flex: 0 0 30px; /* Fixed width for the mark/sign */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  color: #4caf50; /* Green color for marks */
 }
 .todo-indicator {
-    color: orange;
-    flex: 0 0 30px; /* Fixed width for the mark/sign */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
-    
+  color: orange;
+  flex: 0 0 30px; /* Fixed width for the mark/sign */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
 }
 
 .filter-input {
-    margin-bottom: 20px;
-    padding: 10px;
-    width: 100%;
-    max-width: 400px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+  margin-bottom: 20px;
+  padding: 10px;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .task-card {
-    display: flex;
-    flex-direction: column;
-    background: #ffffff;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 10px 0;
-    padding: 10px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 10px 0;
+  padding: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .task-design {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Distributes space between children */
-    gap: 10px; /* Adds space between flex items (mark, title, buttons) */
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Distributes space between children */
+  gap: 10px; /* Adds space between flex items (mark, title, buttons) */
 }
 .task-title {
-    flex: 1; 
-    /* padding: 0 10px; */
-    font-size: 2rem;
-    color: #333;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden; 
+  flex: 1;
+  /* padding: 0 10px; */
+  font-size: 2rem;
+  color: #333;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .task-actions {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .task-actions .button {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 .button {
-    padding: 8px 12px;
-    font-size: 0.9em;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
+  padding: 8px 12px;
+  font-size: 0.9em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .button.update {
-    background-color: rgb(96, 63, 63);
-    color: white;
+  background-color: rgb(96, 63, 63);
+  color: white;
 }
 
 .button.update:hover {
-    background-color: #e0a800;
+  background-color: #e0a800;
 }
 
 .button.delete {
-    background-color: #dc3545;
-    color: white;
+  background-color: #dc3545;
+  color: white;
 }
 
 .button.delete:hover {
-    background-color: #8d1d28;
+  background-color: #8d1d28;
 }
 
 header {
-    background-color: #4caf50;
-    color: white;
-    text-align: center;
-    padding: 20px;
+  background-color: #4caf50;
+  color: white;
+  text-align: center;
+  padding: 20px;
 }
-.light-dark{
-    width: 40px;
-    height: 40px;
+.light-dark {
+  width: 40px;
+  height: 40px;
 }
 header h1 {
-    margin: 0;
-    font-size: 2em;
+  margin: 0;
+  font-size: 2em;
 }
 
 form {
-    margin-top: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
 }
 
-.myInput, select, input[type="date"] {
-    padding: 10px;
-    font-size: 1em;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 200px;
-    box-sizing: border-box;
+.myInput,
+select,
+input[type="date"] {
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 200px;
+  box-sizing: border-box;
 }
 
-.myInput:focus, select:focus, input[type="date"]:focus {
-    outline: none;
-    border-color: #4caf50;
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+.myInput:focus,
+select:focus,
+input[type="date"]:focus {
+  outline: none;
+  border-color: #4caf50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
 }
 
 .button {
-    background-color: #0b6e3a;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  background-color: #0b6e3a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.logout-container{
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    gap: 5px;
-    right: 2%;
-    top: 3%;
+.logout-container {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  right: 2%;
+  top: 3%;
 }
 .button:hover {
-    background-color: #09532c;
+  background-color: #09532c;
 }
 
 /* Done category */
 #done {
-    background-color: #2ecc71; 
-} 
+  background-color: #2ecc71;
+}
 
 .no-tasks {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 10px;
-    text-align: center;
-    border-radius: 5px;
-    margin-top: 10px;
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  margin-top: 10px;
 }
 
 /* Additional styling for hover effects */
 .task-card:hover {
-    transform: scale(1.02);
-    transition: 0.3s ease-in-out;
+  transform: scale(1.02);
+  transition: 0.3s ease-in-out;
 }
 
 .filter-input {
-    width: 97%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
+  width: 97%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
 .filter-input:focus {
-    outline: none;
-    border-color: #3498db; /* Matches the "Doing" color */
-    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+  outline: none;
+  border-color: #3498db; /* Matches the "Doing" color */
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+/*      dark modes       */
+/* Dark Mode */
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+header.dark-mode {
+  background-color: #1f1f1f;
+  color: #ffffff;
+}
+
+.container.dark-mode {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+
+input.dark-mode,
+select.dark-mode,
+textarea.dark-mode {
+  background-color: #222222;
+  color: #e0e0e0;
+  border: 1px solid #444444;
+}
+
+input.dark-mode:focus,
+select.dark-mode:focus,
+textarea.dark-mode:focus {
+  outline: none;
+  border-color: #4caf50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+button.add.dark-mode {
+  background-color: #4caf50;
+  color: white;
+}
+
+button.add.dark-mode:hover {
+  background-color: #378e3b;
+}
+
+button.update.dark-mode {
+  background-color: #2196f3;
+  color: white;
+}
+
+button.update.dark-mode:hover {
+  background-color: #1769aa;
+}
+
+button.delete.dark-mode {
+  background-color: #f44336;
+  color: white;
+}
+
+button.delete.dark-mode:hover {
+  background-color: #d32f2f;
+}
+
+h1.dark-mode {
+  color: #ffffff;
+}
+
+.logout-container .logout.dark-mode {
+  background-color: #4caf50;
+  color: white;
+  border-radius: 50%;
+}
+
+.logout-container .logout.dark-mode:hover {
+  background-color: #378e3b;
 }

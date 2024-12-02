@@ -1,11 +1,15 @@
 <?php
 require "connection.php";
 session_start();
+
 // Redirect to login if not logged in
 if (!isset($_SESSION["username"])) {
     header("Location: ./login/login.php");
     exit();
 }
+
+// Get theme from session or set default to light-mode
+$theme = isset($_SESSION['theme']) ? $_SESSION['theme'] : 'light-mode';
 ?>
 
 <!DOCTYPE html>
@@ -18,17 +22,13 @@ if (!isset($_SESSION["username"])) {
     <title>My ToDoPro</title>
 </head>
 
-<body>
+<body class="<?php echo $theme; ?>">
     <?php include "popup.php"; ?>
-    <header>
+    <header class="<?php echo $theme; ?>">
         <h1>
             <?php
-            if (!isset($_SESSION["username"])) {
-                header("Location: ./login/login.php");
-                exit();
-            }
             $username = $_SESSION['username'];
-            echo $username . "'s TODO ";
+            echo htmlspecialchars($username) . "'s TODO ";
             ?>
         </h1>
         <form action="index.php" method="POST">
@@ -40,17 +40,15 @@ if (!isset($_SESSION["username"])) {
                 $query = "SELECT * FROM `categories`";
                 $result = mysqli_query($conn, $query);
                 while ($row = mysqli_fetch_array($result)) {
-                    echo "<option value=" . $row["id"] . ">" . $row['name'] . "</option>";
+                    echo "<option value=" . $row["id"] . ">" . htmlspecialchars($row['name']) . "</option>";
                 }
                 ?>
             </select>
-            <button class="button" type="submit">Add</button>
-
+            <button class="button add <?php echo $theme; ?>" type="submit">Add</button>
         </form>
     </header>
 
-
-    <div class="container">
+    <div class="container <?php echo $theme; ?>">
         <div class="task-filter">
             <input
                 type="text"
@@ -70,7 +68,7 @@ if (!isset($_SESSION["username"])) {
 
             while ($row = mysqli_fetch_array($result)) {
                 $category_class = strtolower($row["category_name"]);
-                echo '<li class="task-card" id="' . $category_class . '">'; // Add category as ID
+                echo '<li class="task-card ' . $theme . '" id="' . htmlspecialchars($category_class) . '">';
                 echo '<div class="mark">';
                 if ($category_class === "done") {
                     echo '<span class="checkmark">✔</span>';
@@ -82,20 +80,16 @@ if (!isset($_SESSION["username"])) {
                 echo '<div class="task-details">';
                 echo '<div class="task-title">Title: ' . htmlspecialchars($row["title"]) . '</div>';
                 echo '<div class="task-description">Description: ' . htmlspecialchars($row["description"]) . '</div>';
-                if (!empty($row["due_date"])) {
-                    echo '<div class="task-due-date">Due Date: ' . htmlspecialchars($row["due_date"]) . '</div>';
-                } else {
-                    echo '<div class="task-due-date">Due Date: Not specified</div>';
-                }
+                echo '<div class="task-due-date">Due Date: ' . htmlspecialchars($row["due_date"] ?? 'Not specified') . '</div>';
                 echo '</div>';
                 echo '<div class="task-actions">';
                 echo '<form action="updateTask.php" method="GET" style="display: inline;">';
-                echo '<input type="hidden" name="task_id" value="' . $row["id"] . '">';
-                echo '<button class="button update" type="submit">Update</button>';
+                echo '<input type="hidden" name="task_id" value="' . htmlspecialchars($row["id"]) . '">';
+                echo '<button class="button update ' . $theme . '" type="submit">Update</button>';
                 echo '</form>';
                 echo '<form action="deleteTask.php" method="POST" style="display: inline;">';
-                echo '<input type="hidden" name="task_id" value="' . $row["id"] . '">';
-                echo '<button class="button delete" type="submit">Delete</button>';
+                echo '<input type="hidden" name="task_id" value="' . htmlspecialchars($row["id"]) . '">';
+                echo '<button class="button delete ' . $theme . '" type="submit">Delete</button>';
                 echo '</form>';
                 echo '</div>';
                 echo '</div>';
@@ -108,19 +102,19 @@ if (!isset($_SESSION["username"])) {
         <img id="themeToggle" class="light-dark" src="./assets/night-mode.png" alt="light-dark">
         <?php
         if (isset($_SESSION['user_id'])) {
-            echo '<a href="logout.php"><img class="button logout" src="./assets/logout.svg" alt="logout"></a>';
+            echo '<a href="logout.php"><img class="button logout ' . $theme . '" src="./assets/logout.svg" alt="logout"></a>';
         }
         ?>
     </div>
     <script src="./js/main.js"></script>
     <script>
         function searchTask(str) {
-            xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            const xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
                     document.getElementById("result").innerHTML = xmlhttp.responseText;
                 }
-            }
+            };
             xmlhttp.open("GET", "./api/searchByName.php?task_title=" + str, true);
             xmlhttp.send();
         }
