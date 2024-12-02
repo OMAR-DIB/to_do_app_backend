@@ -2,6 +2,15 @@
 require "connection.php";
 session_start();
 
+// Language handling
+$_SESSION['lang'] = $_SESSION['lang'] ?? 'en';
+if (isset($_GET['lang'])) {
+    $_SESSION['lang'] = $_GET['lang'];
+}
+
+// Include language file
+include "lang/" . $_SESSION['lang'] . ".php";
+
 // Redirect to login if not logged in
 if (!isset($_SESSION["username"])) {
     header("Location: ./login/login.php");
@@ -13,17 +22,21 @@ $theme = isset($_SESSION['theme']) ? $_SESSION['theme'] : 'light-mode';
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="<?php echo $_SESSION['lang']; ?>">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./style/style.css">
-    <title>My ToDoPro</title>
+    <title><?php echo $lang['title']; ?></title>
 </head>
 
 <body class="<?php echo $theme; ?>">
     <?php include "popup.php"; ?>
+    <div class="language-switcher">
+        <a href="?lang=en">English</a>
+        <a href="?lang=es">Español</a>
+    </div>
+
     <header class="<?php echo $theme; ?>">
         <h1>
             <?php
@@ -32,8 +45,8 @@ $theme = isset($_SESSION['theme']) ? $_SESSION['theme'] : 'light-mode';
             ?>
         </h1>
         <form action="index.php" method="POST">
-            <input type="text" class="myInput" placeholder="Title..." name="title" required />
-            <input type="text" class="myInput" placeholder="Description..." name="description" required />
+            <input type="text" class="myInput" placeholder="<?php echo $lang['title_placeholder']; ?>" name="title" required />
+            <input type="text" class="myInput" placeholder="<?php echo $lang['description_placeholder']; ?>" name="description" required />
             <input name="due_date" type="date" required />
             <select name="category_id" id="">
                 <?php
@@ -44,7 +57,7 @@ $theme = isset($_SESSION['theme']) ? $_SESSION['theme'] : 'light-mode';
                 }
                 ?>
             </select>
-            <button class="button add <?php echo $theme; ?>" type="submit">Add</button>
+            <button class="button add <?php echo $theme; ?>" type="submit"><?php echo $lang['add_task']; ?></button>
         </form>
     </header>
 
@@ -53,7 +66,7 @@ $theme = isset($_SESSION['theme']) ? $_SESSION['theme'] : 'light-mode';
             <input
                 type="text"
                 id="taskFilterInput"
-                placeholder="Search tasks..."
+                placeholder="<?php echo $lang['search_placeholder']; ?>"
                 class="filter-input"
                 onkeyup="searchTask(this.value)" />
         </div>
@@ -78,18 +91,18 @@ $theme = isset($_SESSION['theme']) ? $_SESSION['theme'] : 'light-mode';
                 echo '</div>';
                 echo '<div class="task-design">';
                 echo '<div class="task-details">';
-                echo '<div class="task-title">Title: ' . htmlspecialchars($row["title"]) . '</div>';
-                echo '<div class="task-description">Description: ' . htmlspecialchars($row["description"]) . '</div>';
-                echo '<div class="task-due-date">Due Date: ' . htmlspecialchars($row["due_date"] ?? 'Not specified') . '</div>';
+                echo '<div class="task-title">' . $lang['task_title'] . ' ' . htmlspecialchars($row["title"]) . '</div>';
+                echo '<div class="task-description">' . $lang['task_description'] . ' ' . htmlspecialchars($row["description"]) . '</div>';
+                echo '<div class="task-due-date">' . $lang['task_due_date'] . ' ' . htmlspecialchars($row["due_date"] ?? 'Not specified') . '</div>';
                 echo '</div>';
                 echo '<div class="task-actions">';
                 echo '<form action="updateTask.php" method="GET" style="display: inline;">';
                 echo '<input type="hidden" name="task_id" value="' . htmlspecialchars($row["id"]) . '">';
-                echo '<button class="button update ' . $theme . '" type="submit">Update</button>';
+                echo '<button class="button update ' . $theme . '" type="submit">' . $lang['update_button'] . '</button>';
                 echo '</form>';
                 echo '<form action="deleteTask.php" method="POST" style="display: inline;">';
                 echo '<input type="hidden" name="task_id" value="' . htmlspecialchars($row["id"]) . '">';
-                echo '<button class="button delete ' . $theme . '" type="submit">Delete</button>';
+                echo '<button class="button delete ' . $theme . '" type="submit">' . $lang['delete_button'] . '</button>';
                 echo '</form>';
                 echo '</div>';
                 echo '</div>';
@@ -120,9 +133,9 @@ $theme = isset($_SESSION['theme']) ? $_SESSION['theme'] : 'light-mode';
         }
     </script>
 </body>
-
 </html>
 
+<!-- Rest of the existing PHP code remains the same -->
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST["title"]) && isset($_POST["description"]) && isset($_POST["due_date"])) {
