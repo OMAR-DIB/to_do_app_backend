@@ -23,21 +23,37 @@ $theme = isset($_SESSION['theme']) ? $_SESSION['theme'] : 'light-mode';
 
 <!DOCTYPE html>
 <html lang="<?php echo $_SESSION['lang']; ?>">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./style/style.css">
+    <style>
+        .language-switcher a {
+            display: inline-block;
+            margin: 0 2px;
+            padding: 3px 3px;
+            text-decoration: none;
+            font-size: 10px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #2d3e51;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+    </style>
     <title><?php echo $lang['title']; ?></title>
 </head>
 
 <body class="<?php echo $theme; ?>">
     <?php include "popup.php"; ?>
-    <div class="language-switcher">
-        <a href="?lang=en">English</a>
-        <a href="?lang=es">Español</a>
-    </div>
 
     <header class="<?php echo $theme; ?>">
+        <div class="language-switcher">
+            <a href="?lang=en" class="selected">English</a>
+            <a href="?lang=es">Español</a>
+        </div>
         <h1>
             <?php
             $username = $_SESSION['username'];
@@ -123,7 +139,7 @@ $theme = isset($_SESSION['theme']) ? $_SESSION['theme'] : 'light-mode';
     <script>
         function searchTask(str) {
             const xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function () {
+            xmlhttp.onreadystatechange = function() {
                 if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
                     document.getElementById("result").innerHTML = xmlhttp.responseText;
                 }
@@ -133,6 +149,7 @@ $theme = isset($_SESSION['theme']) ? $_SESSION['theme'] : 'light-mode';
         }
     </script>
 </body>
+
 </html>
 
 <!-- Rest of the existing PHP code remains the same -->
