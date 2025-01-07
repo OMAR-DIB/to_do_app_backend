@@ -17,6 +17,28 @@ if (!isset($_SESSION["username"])) {
     exit();
 }
 
+// Handle form submission at the top
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST["title"]) && isset($_POST["description"]) && isset($_POST["due_date"])) {
+        $task_title = mysqli_real_escape_string($conn, $_POST["title"]);
+        $task_description = mysqli_real_escape_string($conn, $_POST["description"]);
+        $task_category = intval($_POST['category_id']);
+        $task_due_date = mysqli_real_escape_string($conn, $_POST["due_date"]);
+        $user_id = intval($_SESSION['user_id']);
+
+        $query = "INSERT INTO tasks (user_id, category_id, title, description, due_date) 
+                  VALUES ($user_id, $task_category, '$task_title', '$task_description', '$task_due_date')";
+
+        if (mysqli_query($conn, $query)) {
+            // Redirect after successful insertion
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
+        } else {
+            error_log("Error adding task: " . mysqli_error($conn));
+        }
+    }
+}
+
 // Get theme from session or set default to light-mode
 $theme = isset($_SESSION['theme']) ? $_SESSION['theme'] : 'light-mode';
 ?>
